@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+html {
+  font-family: var(--font-golos), 'Golos Text', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  scrollbar-gutter: stable;
+}
+
+button, a {
+  touch-action: manipulation;
+}
+
+body {
+  font-family: var(--font-golos), 'Golos Text', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.font-montserrat {
+  font-family: var(--font-golos), 'Golos Text', 'Inter', -apple-system, sans-serif;
+}
+
+@layer base {
+  :root {
+    --font-sans: var(--font-golos), 'Golos Text', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+}
+
+h1, h2, h3, h4, h5, h6,
+.font-display,
+.font-heading,
+.font-unbounded,
+.banner-title {
+  font-family: var(--font-golos), 'Golos Text', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  letter-spacing: -0.015em;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.2s ease-out forwards;
+}
+
+.animate-slideUp {
+  animation: slideUp 0.25s ease-out forwards;
+}
+
+@keyframes subtleFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-subtleFade {
+  animation: subtleFade 0.15s ease-out forwards;
+}

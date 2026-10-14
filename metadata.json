@@ -1,0 +1,8 @@
+{
+  "name": "B2B_FALCONTRADING_RU",
+  "description": "Прямой импортер и поставщик пищевого сырья: соковые концентраты, фруктовые пюре, томатная паста, цукаты и орехи в асептических бочках и гофрокоробах.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
