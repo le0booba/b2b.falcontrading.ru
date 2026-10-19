@@ -18,6 +18,7 @@ export default function HeroSection({ onGoToCatalog, onOpenQuoteModal }: HeroSec
             alt="Фалкон Трейдинг Груп — Сельскохозяйственное сырье"
             fill
             priority
+            decoding="async"
             sizes="(max-width: 1280px) 100vw, 1280px"
             className="object-cover object-center"
             referrerPolicy="no-referrer"

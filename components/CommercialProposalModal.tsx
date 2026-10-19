@@ -109,7 +109,7 @@ export default function CommercialProposalModal({
             </h3>
             {initialProduct && (
               <p className="text-[11px] sm:text-xs text-emerald-800 font-semibold mt-0.5 sm:mt-1">
-                Выбранная позиция: {initialProduct.name}
+                Выбранная позиция: <span className="font-extrabold tracking-wide text-emerald-950">{initialProduct.name}</span>
                 {initialProduct.brix && initialProduct.brix.trim()
                   ? ` (${initialProduct.brix.trim()})`
                   : ''}
@@ -128,8 +128,8 @@ export default function CommercialProposalModal({
         <div className="p-2 sm:p-4 md:p-5 max-h-[76vh] sm:max-h-[82vh] overflow-y-auto">
           <div className="w-full relative rounded-xl overflow-hidden min-h-[500px]">
             <YandexFormEmbed
-              key={`quote_${sessionId}_${initialProduct?.id || 'none'}`}
-              cacheKey={`ftg_${sessionId}_${initialProduct?.id || 'general'}`}
+              key={`quote_${initialProduct?.id || 'general'}`}
+              cacheKey="ftg_quote"
               formId="6ac07cfceb6146ba89b065c6"
               itemValue={initialProduct ? getProductFullSpecString(initialProduct) : ''}
             />

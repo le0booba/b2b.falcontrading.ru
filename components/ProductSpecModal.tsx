@@ -105,14 +105,17 @@ export default function ProductSpecModal({
         <div className="relative flex items-start justify-between p-4 sm:p-6 border-b border-stone-200 bg-[#fbfcfb] pr-12 sm:pr-6">
           <div className="flex items-center gap-3 sm:gap-4 min-w-0 flex-1">
             {product.image && (
-              <div className="relative w-16 h-16 sm:w-24 sm:h-24 rounded-2xl overflow-hidden bg-stone-100 border border-stone-200/80 shrink-0 shadow-2xs">
+              <div className="relative w-20 h-20 sm:w-28 sm:h-28 rounded-none overflow-hidden bg-stone-100 shrink-0">
                 <Image
                   src={product.image}
                   alt={product.name}
                   fill
-                  sizes="(max-width: 640px) 64px, 96px"
-                  className="object-cover"
+                  sizes="(max-width: 640px) 80px, 112px"
+                  className="object-cover rounded-none"
                   referrerPolicy="no-referrer"
+                  loading="eager"
+                  priority
+                  decoding="async"
                 />
               </div>
             )}
@@ -125,7 +128,7 @@ export default function ProductSpecModal({
                   {product.categoryTitle}
                 </span>
               </div>
-              <h3 id="spec-modal-title" className="text-lg sm:text-2xl font-bold text-stone-900 leading-snug tracking-tight break-words">
+              <h3 id="spec-modal-title" className="text-xl sm:text-2xl font-medium text-stone-900 leading-snug tracking-wide break-words">
                 {product.name}
               </h3>
             </div>

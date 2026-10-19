@@ -80,7 +80,8 @@ export default function SupplyWorldMap() {
             alt="Карта географии поставок Фалкон Трейдинг Груп"
             fill
             className="object-contain p-2 sm:p-4 select-none pointer-events-none"
-            priority
+            loading="lazy"
+            decoding="async"
             sizes="(max-width: 768px) 1200px, 100vw"
             referrerPolicy="no-referrer"
             draggable={false}

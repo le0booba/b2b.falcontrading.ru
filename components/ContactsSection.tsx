@@ -3,12 +3,11 @@
 import { useState } from 'react';
 import {
   MapPin,
+  Map,
   ArrowUpRight,
   Warehouse,
   Building,
   Globe,
-  Copy,
-  Check,
 } from 'lucide-react';
 import QRCode from '@/components/QRCode';
 import YandexFormEmbed from '@/components/YandexFormEmbed';
@@ -17,7 +16,6 @@ interface ContactsSectionProps {}
 
 export default function ContactsSection({}: ContactsSectionProps = {}) {
   const [activeMapTab, setActiveMapTab] = useState<'ramenskoye' | 'moscow'>('ramenskoye');
-  const [copiedAddress, setCopiedAddress] = useState(false);
 
   const [activeQrId, setActiveQrId] = useState<string | null>(null);
 
@@ -25,18 +23,6 @@ export default function ContactsSection({}: ContactsSectionProps = {}) {
     setActiveQrId((prev) => (prev === id ? null : id));
   };
 
-  const handleCopyAddress = () => {
-    const addressToCopy =
-      activeMapTab === 'ramenskoye'
-        ? '140101, Россия, Московская область, г. Раменское, ул. Транспортный проезд, дом 5А'
-        : '129344, Россия, г. Москва, ул. Искры, дом 17А, строение 3';
-
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(addressToCopy);
-      setCopiedAddress(true);
-      setTimeout(() => setCopiedAddress(false), 2000);
-    }
-  };
 
   return (
     <div className="space-y-8 animate-fadeIn">
@@ -56,37 +42,39 @@ export default function ContactsSection({}: ContactsSectionProps = {}) {
               </h2>
             </div>
 
-            <div className="p-3.5 rounded-xl border border-stone-200/90 bg-white flex items-center justify-between gap-3 text-xs sm:text-[13px]">
-              <div className="space-y-3.5 min-w-0">
-                <div className="flex items-baseline gap-2">
+            <div className="p-3.5 rounded-xl border border-stone-200/90 bg-white space-y-3.5">
+              <div className="flex items-center justify-between gap-3 pb-3 border-b border-stone-100">
+                <div className="flex items-baseline gap-2 min-w-0">
                   <span className="font-normal text-stone-500 text-xs tracking-normal">Телефон:</span>
                   <a
                     href="tel:+74957757255"
-                    className="text-black font-bold text-sm sm:text-base text-[#15281b] hover:text-[#223329] transition-colors"
+                    className="font-bold text-sm sm:text-base text-[#15281b] hover:text-[#223329] transition-colors"
                   >
                     +7 (495) 775–72–55
                   </a>
                 </div>
-                <div className="flex items-baseline gap-2">
+              </div>
+
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-baseline gap-2 min-w-0">
                   <span className="font-normal text-stone-500 text-xs tracking-normal">E-Mail:</span>
                   <a
                     href="mailto:b2b@falcontrading.ru"
-                    className="tracking-wide font-bold text-s sm:text-sm text-[#15281b] hover:text-[#223329] hover:underline transition-colors font-mono"
+                    className="tracking-wide font-bold text-xs sm:text-sm text-[#15281b] hover:text-[#223329] hover:underline transition-colors font-mono"
                   >
                     b2b@falcontrading.ru
                   </a>
                 </div>
-              </div>
-              <div className="flex flex-col items-center shrink-0 pt-2.5">
-                <QRCode
-                  value="mailto:b2b@falcontrading.ru"
-                  size={44}
-                  isBlurred={activeQrId !== 'email'}
-                  onToggleBlur={() => handleToggleQr('email')}
-                  bgClassName="bg-white p-1 rounded-md border border-stone-200 shrink-0"
-                  align="right"
-                />
-                <span className="text-[9px] text-stone-400 mt-1">Почта</span>
+                <div className="flex items-center shrink-0">
+                  <QRCode
+                    value="mailto:b2b@falcontrading.ru"
+                    size={44}
+                    isBlurred={activeQrId !== 'email'}
+                    onToggleBlur={() => handleToggleQr('email')}
+                    bgClassName="bg-white p-1 rounded-md border border-stone-200 shrink-0"
+                    align="right"
+                  />
+                </div>
               </div>
             </div>
 
@@ -107,7 +95,7 @@ export default function ContactsSection({}: ContactsSectionProps = {}) {
                   </a>
                 </div>
                 
-                <div className="flex flex-col items-center shrink-0">
+                <div className="flex items-center shrink-0">
                   <QRCode
                     value="https://www.складвраменском.рф"
                     size={44}
@@ -115,7 +103,6 @@ export default function ContactsSection({}: ContactsSectionProps = {}) {
                     onToggleBlur={() => handleToggleQr('warehouse_site')}
                     align="right"
                   />
-                  <span className="text-[9px] text-stone-400 mt-1">Склад</span>
                 </div>
               </div>
 
@@ -135,7 +122,7 @@ export default function ContactsSection({}: ContactsSectionProps = {}) {
                   </a>
                 </div>
 
-                <div className="flex flex-col items-center shrink-0">
+                <div className="flex items-center shrink-0">
                   <QRCode
                     value="https://falcontrading.ru"
                     size={44}
@@ -143,7 +130,6 @@ export default function ContactsSection({}: ContactsSectionProps = {}) {
                     onToggleBlur={() => handleToggleQr('main_site')}
                     align="right"
                   />
-                  <span className="text-[9px] text-stone-400 mt-1">FTG</span>
                 </div>
               </div>
             </div>
@@ -159,110 +145,83 @@ export default function ContactsSection({}: ContactsSectionProps = {}) {
             </div>
 
             <div className="w-full relative rounded-xl overflow-hidden min-h-[580px]">
-              <YandexFormEmbed formId="6ac07cfceb6146ba89b065c6" minHeight="580px" />
+              <YandexFormEmbed
+                formId="6ac07cfceb6146ba89b065c6"
+                cacheKey="ftg_contacts"
+                minHeight="580px"
+              />
             </div>
           </div>
         </div>
       </div>
 
       <div className="space-y-4 pt-4">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center p-1 bg-stone-100 rounded-xl border border-stone-200">
-            <button
-              onClick={() => setActiveMapTab('ramenskoye')}
-              className={`flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-lg transition-all cursor-pointer ${
-                activeMapTab === 'ramenskoye'
-                  ? 'bg-[#223329] text-white shadow-xs'
-                  : 'text-stone-700 hover:text-stone-950'
-              }`}
-            >
-              <Warehouse className="w-3.5 h-3.5" />
-              <span>Склад (Раменское)</span>
-            </button>
-            <button
-              onClick={() => setActiveMapTab('moscow')}
-              className={`flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-lg transition-all cursor-pointer ${
-                activeMapTab === 'moscow'
-                  ? 'bg-[#223329] text-white shadow-xs'
-                  : 'text-stone-700 hover:text-stone-950'
-              }`}
-            >
-              <Building className="w-3.5 h-3.5" />
-              <span>Офис компании (Москва)</span>
-            </button>
-          </div>
+        <div className="flex items-center p-1 bg-stone-100 rounded-xl border border-stone-200 w-full sm:w-fit">
+          <button
+            onClick={() => setActiveMapTab('ramenskoye')}
+            className={`flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-4 py-2 text-xs font-bold rounded-lg transition-all cursor-pointer ${
+              activeMapTab === 'ramenskoye'
+                ? 'bg-[#223329] text-white shadow-xs'
+                : 'text-stone-700 hover:text-stone-950'
+            }`}
+          >
+            <Warehouse className="w-3.5 h-3.5 shrink-0" />
+            <span>Склад (Раменское)</span>
+          </button>
+          <button
+            onClick={() => setActiveMapTab('moscow')}
+            className={`flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-4 py-2 text-xs font-bold rounded-lg transition-all cursor-pointer ${
+              activeMapTab === 'moscow'
+                ? 'bg-[#223329] text-white shadow-xs'
+                : 'text-stone-700 hover:text-stone-950'
+            }`}
+          >
+            <Building className="w-3.5 h-3.5 shrink-0" />
+            <span>Офис компании (Москва)</span>
+          </button>
+        </div>
 
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2 bg-white p-1.5 pr-2.5 rounded-xl border border-stone-200 shadow-2xs">
+        <div className="bg-white p-3.5 sm:p-4 rounded-xl border border-stone-200/90 shadow-2xs space-y-3.5">
+          <div className="flex items-center justify-between gap-3 text-xs sm:text-sm md:text-[14px] text-stone-800">
+            <div className="flex items-center gap-2.5 min-w-0 flex-1">
+              <MapPin className="w-4 h-4 text-[#223329] shrink-0" />
+              <span className="font-semibold text-stone-900 leading-normal break-words">
+                {activeMapTab === 'ramenskoye'
+                  ? '140101, Россия, Московская область, г. Раменское, ул. Транспортный проезд, дом 5А'
+                  : '129344, Россия, г. Москва, ул. Искры, дом 17А, строение 3'}
+              </span>
+            </div>
+
+            <div className="flex items-center gap-2 shrink-0">
+              <a
+                href={
+                  activeMapTab === 'ramenskoye'
+                    ? 'https://yandex.ru/maps/?text=Раменское+Транспортный+проезд+5А'
+                    : 'https://yandex.ru/maps/?text=Москва+улица+Искры+17Ас3'
+                }
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 bg-stone-50 hover:bg-stone-100/90 px-3 py-2 rounded-xl border border-stone-200/90 transition-all shadow-2xs group"
+                title="Открыть адрес на Яндекс Картах"
+              >
+                <Map className="w-4 h-4 sm:hidden text-stone-600 group-hover:text-[#223329]" />
+                <span className="hidden sm:inline text-xs font-semibold text-stone-700 group-hover:text-[#223329]">Открыть адрес на Яндекс Картах</span>
+                <ArrowUpRight className="w-4 h-4 hidden sm:inline text-stone-600 group-hover:text-[#223329]" />
+              </a>
               <QRCode
                 value={
                   activeMapTab === 'ramenskoye'
                     ? 'https://yandex.ru/maps/?text=Раменское+Транспортный+проезд+5А'
                     : 'https://yandex.ru/maps/?text=Москва+улица+Искры+17Ас3'
                 }
-                size={48}
+                size={40}
                 isBlurred={activeQrId !== activeMapTab}
                 onToggleBlur={() => handleToggleQr(activeMapTab)}
-                bgClassName="bg-white p-0.5 rounded shrink-0"
-                align="left"
+                bgClassName="bg-white p-1 rounded-md border border-stone-200 shrink-0"
+                align="right"
               />
-              <span className="text-[10px] font-bold text-stone-700 leading-tight">
-                <span className="text-[9px] text-stone-500 font-normal">
-                  {activeMapTab === 'ramenskoye' ? 'Склад' : 'Офис'}
-                </span>
-              </span>
             </div>
-
-            <a
-              href={
-                activeMapTab === 'ramenskoye'
-                  ? 'https://yandex.ru/maps/?text=Раменское+Транспортный+проезд+5А'
-                  : 'https://yandex.ru/maps/?text=Москва+улица+Искры+17Ас3'
-              }
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-xs font-bold text-stone-700 hover:text-[#223329] transition-colors"
-            >
-              <ArrowUpRight className="w-4 h-4" />
-              <span>
-                Открыть {activeMapTab === 'ramenskoye' ? 'склад' : 'офис'} в Яндекс Картах
-              </span>
-            </a>
           </div>
-        </div>
-
-        <div className="flex items-center justify-between gap-3 text-xs sm:text-sm md:text-[14px] text-stone-800 bg-white p-3.5 rounded-xl border border-stone-200 shadow-2xs">
-          <div className="flex items-center gap-2.5 min-w-0 flex-1">
-            <MapPin className="w-4 h-4 text-[#223329] shrink-0" />
-            <span className="font-semibold text-stone-900 leading-normal break-words">
-              {activeMapTab === 'ramenskoye'
-                ? '140101, Россия, Московская область, г. Раменское, ул. Транспортный проезд, дом 5А'
-                : '129344, Россия, г. Москва, ул. Искры, дом 17А, строение 3'}
-            </span>
-          </div>
-
-          <button
-            type="button"
-            onClick={handleCopyAddress}
-            title="Скопировать адрес в буфер обмена"
-            className="flex items-center justify-center gap-1.5 shrink-0 rounded-lg border transition-all cursor-pointer shadow-2xs active:scale-95 text-xs font-semibold p-2 sm:px-3 sm:py-1.5 w-9 h-9 sm:w-[120px] sm:h-auto"
-            style={{
-              borderColor: copiedAddress ? '#a7f3d0' : '#e7e5e4',
-              backgroundColor: copiedAddress ? '#ecfdf5' : '#f5f5f4',
-            }}
-          >
-            {copiedAddress ? (
-              <>
-                <Check className="w-4 h-4 sm:w-3.5 sm:h-3.5 text-emerald-600 shrink-0 stroke-[2.5]" />
-                <span className="hidden sm:inline text-emerald-700 font-bold">Скопировано</span>
-              </>
-            ) : (
-              <>
-                <Copy className="w-4 h-4 sm:w-3.5 sm:h-3.5 text-stone-500 shrink-0" />
-                <span className="hidden sm:inline text-stone-700 font-medium">Скопировать</span>
-              </>
-            )}
-          </button>
         </div>
 
         <div className="relative w-full h-[260px] sm:h-[290px] rounded-2xl overflow-hidden border border-stone-300 shadow-sm bg-[#e8ece9]">

@@ -45,7 +45,7 @@ export default function Navbar({ activeTab, setActiveTab, onOpenQuoteModal }: Na
     <>
       <header
         ref={navRef}
-        className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-stone-200/80 shadow-xs"
+        className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-stone-200/80 shadow-xs relative"
       >
         <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
           <div className="flex items-center justify-between h-22 sm:h-24">
@@ -55,12 +55,13 @@ export default function Navbar({ activeTab, setActiveTab, onOpenQuoteModal }: Na
             >
               <div className="relative w-20 sm:w-24 h-16 sm:h-18 shrink-0 drop-shadow-xs">
                 <Image
-                  src="/logo.jpg"
+                  src="/logo.png"
                   alt="Фалкон Трейдинг Груп"
                   fill
                   sizes="96px"
                   className="object-contain"
                   priority
+                  decoding="async"
                   referrerPolicy="no-referrer"
                 />
               </div>
@@ -142,64 +143,64 @@ export default function Navbar({ activeTab, setActiveTab, onOpenQuoteModal }: Na
               </button>
             </div>
           </div>
-
-          {mobileMenuOpen && (
-            <div className="md:hidden py-4 border-t border-stone-200 space-y-2 animate-fadeIn">
-              <button
-                onClick={() => handleNavClick('home')}
-                className={`w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-colors cursor-pointer ${
-                  activeTab === 'home'
-                    ? 'bg-[#223329] text-white'
-                    : 'text-stone-800 hover:bg-stone-100'
-                }`}
-              >
-                Главная
-              </button>
-              <button
-                onClick={() => handleNavClick('catalog')}
-                className={`w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-colors cursor-pointer ${
-                  activeTab === 'catalog'
-                    ? 'bg-[#223329] text-white'
-                    : 'text-stone-800 hover:bg-stone-100'
-                }`}
-              >
-                Продукция
-              </button>
-              <button
-                onClick={() => handleNavClick('contacts')}
-                className={`w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-colors cursor-pointer ${
-                  activeTab === 'contacts'
-                    ? 'bg-[#223329] text-white'
-                    : 'text-stone-800 hover:bg-stone-100'
-                }`}
-              >
-                Контакты
-              </button>
-              <div className="pt-3 border-t border-stone-200 flex flex-col gap-2 px-2">
-                <a
-                  href="tel:+74957757255"
-                  className="flex items-center gap-2 text-sm font-semibold text-stone-800 py-1 hover:text-[#223329]"
-                >
-                  <Phone className="w-4 h-4 text-[#223329]" />
-                  +7 (495) 775-72-55
-                </a>
-                <a
-                  href="mailto:b2b@falcontrading.ru"
-                  className="flex items-center gap-2 text-sm text-stone-600 py-1 hover:text-stone-900"
-                >
-                  <Mail className="w-4 h-4 text-[#223329]" />
-                  b2b@falcontrading.ru
-                </a>
-              </div>
-            </div>
-          )}
         </div>
+
+        {mobileMenuOpen && (
+          <div className="md:hidden absolute top-full left-0 right-0 bg-white/98 backdrop-blur-md border-b border-stone-200/90 shadow-xl px-6 py-4 space-y-2 animate-fadeIn z-50">
+            <button
+              onClick={() => handleNavClick('home')}
+              className={`w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-colors cursor-pointer ${
+                activeTab === 'home'
+                  ? 'bg-[#223329] text-white'
+                  : 'text-stone-800 hover:bg-stone-100'
+              }`}
+            >
+              Главная
+            </button>
+            <button
+              onClick={() => handleNavClick('catalog')}
+              className={`w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-colors cursor-pointer ${
+                activeTab === 'catalog'
+                  ? 'bg-[#223329] text-white'
+                  : 'text-stone-800 hover:bg-stone-100'
+              }`}
+            >
+              Продукция
+            </button>
+            <button
+              onClick={() => handleNavClick('contacts')}
+              className={`w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-colors cursor-pointer ${
+                activeTab === 'contacts'
+                  ? 'bg-[#223329] text-white'
+                  : 'text-stone-800 hover:bg-stone-100'
+              }`}
+            >
+              Контакты
+            </button>
+            <div className="pt-3 border-t border-stone-200 flex flex-col gap-2 px-2">
+              <a
+                href="tel:+74957757255"
+                className="flex items-center gap-2 text-sm font-semibold text-stone-800 py-1 hover:text-[#223329]"
+              >
+                <Phone className="w-4 h-4 text-[#223329]" />
+                +7 (495) 775-72-55
+              </a>
+              <a
+                href="mailto:b2b@falcontrading.ru"
+                className="flex items-center gap-2 text-sm text-stone-600 py-1 hover:text-stone-900"
+              >
+                <Mail className="w-4 h-4 text-[#223329]" />
+                b2b@falcontrading.ru
+              </a>
+            </div>
+          </div>
+        )}
       </header>
 
       {mobileMenuOpen && (
         <div
           onClick={() => setMobileMenuOpen(false)}
-          className="fixed inset-0 z-30 bg-stone-950/40 backdrop-blur-2xs md:hidden animate-fadeIn"
+          className="fixed inset-0 top-22 sm:top-24 z-30 bg-stone-950/40 backdrop-blur-2xs md:hidden animate-fadeIn"
           aria-hidden="true"
         />
       )}

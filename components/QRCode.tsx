@@ -71,8 +71,8 @@ export default function QRCode({
             className="flex flex-col items-center justify-center rounded-xl border border-stone-200/80 bg-stone-50 hover:bg-stone-100 hover:border-stone-300 text-stone-500 hover:text-[#223329] transition-all cursor-pointer shadow-2xs group w-full h-full"
             title="Открыть QR-код"
           >
-            <QrCode className="w-5 h-5 text-stone-400 group-hover:text-[#223329] transition-colors" />
-            <span className="text-[8px] font-bold text-stone-400 group-hover:text-stone-600 mt-0.5 tracking-tight uppercase">QR</span>
+            <QrCode className="w-5 h-5 text-stone-500 group-hover:text-[#223329] transition-colors" />
+            <span className="text-[10px] font-bold text-stone-500 group-hover:text-[#223329] mt-0.5 tracking-tight uppercase transition-colors">QR</span>
           </button>
         ) : (
           <div

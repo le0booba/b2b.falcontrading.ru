@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect } from 'react';
-import Link from 'next/link';
 
 export default function GlobalError({
   error,
@@ -29,12 +28,13 @@ export default function GlobalError({
           >
             Попробовать снова
           </button>
-          <Link
+          {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+          <a
             href="/"
             className="px-5 py-2.5 rounded-xl bg-stone-100 text-stone-800 text-xs font-bold hover:bg-stone-200 transition-all border border-stone-200"
           >
             На главную
-          </Link>
+          </a>
         </div>
       </div>
     </div>

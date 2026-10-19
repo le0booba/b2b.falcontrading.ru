@@ -18,20 +18,27 @@ export default function PagePreloader() {
       }, 300);
     };
 
+    const minDisplayTime = 500;
+    const startTime = Date.now();
+
+    const scheduleHide = () => {
+      const elapsed = Date.now() - startTime;
+      const delay = Math.max(0, minDisplayTime - elapsed);
+      fadeTimer = setTimeout(hideLoader, delay);
+    };
+
     if (typeof document !== 'undefined' && 'fonts' in document) {
       document.fonts.ready
         .then(() => {
-          requestAnimationFrame(() => {
-            requestAnimationFrame(hideLoader);
-          });
+          requestAnimationFrame(scheduleHide);
         })
         .catch(() => {
-          hideLoader();
+          scheduleHide();
         });
 
-      fadeTimer = setTimeout(hideLoader, 400);
+      fadeTimer = setTimeout(scheduleHide, 1000);
     } else {
-      hideLoader();
+      scheduleHide();
     }
 
     return () => {
@@ -45,23 +52,30 @@ export default function PagePreloader() {
   return (
     <div
       aria-hidden="true"
-      className={`fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-[#fafbfa] transition-opacity duration-300 ease-out select-none pointer-events-none ${
-        fading ? 'opacity-0' : 'opacity-100'
-      }`}
+      className={`fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-[#fafbfa] transition-opacity duration-300 ease-out select-none pointer-events-none ${fading ? 'opacity-0' : 'opacity-100'
+        }`}
     >
       <div className="flex flex-col items-center justify-center animate-fadeIn">
-        <div className="relative w-28 h-22 sm:w-32 sm:h-26 drop-shadow-xs">
+        <div className="relative w-32 h-22 sm:w-36 sm:h-25">
           <Image
-            src="/logo.jpg"
+            src="/logo.png"
             alt="Фалкон Трейдинг Груп"
             fill
-            sizes="128px"
+            sizes="(max-width: 640px) 128px, 144px"
             className="object-contain"
             priority
+            decoding="async"
             referrerPolicy="no-referrer"
           />
+        </div>
+
+        <div className="mt-5 flex items-center justify-center gap-2 py-0.5" aria-hidden="true">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#223329] preloader-dot-1" />
+          <span className="w-1.5 h-1.5 rounded-full bg-[#223329] preloader-dot-2" />
+          <span className="w-1.5 h-1.5 rounded-full bg-[#223329] preloader-dot-3" />
         </div>
       </div>
     </div>
   );
 }
+

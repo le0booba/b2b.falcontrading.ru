@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useSyncExternalStore } from 'react';
 
 interface YandexFormEmbedProps {
   formId?: string;
@@ -25,17 +25,13 @@ export default function YandexFormEmbed({
   prefillValue = '',
   cacheKey,
 }: YandexFormEmbedProps) {
-  const [mounted, setMounted] = useState(false);
-  const [sessionKey, setSessionKey] = useState('');
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false
+  );
 
   useEffect(() => {
-    const randomSuffix = `${Date.now().toString(36)}_${Math.random().toString(36).substring(2, 8)}`;
-
-    const timer = setTimeout(() => {
-      setSessionKey(`s_${randomSuffix}`);
-      setMounted(true);
-    }, 0);
-
     const loadScript = () => {
       const scriptId = 'ya-forms-embed-script';
       if (!document.getElementById(scriptId)) {
@@ -50,7 +46,6 @@ export default function YandexFormEmbed({
     if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
       const idleId = (window as any).requestIdleCallback(loadScript, { timeout: 2000 });
       return () => {
-        clearTimeout(timer);
         if ('cancelIdleCallback' in window) {
           (window as any).cancelIdleCallback(idleId);
         }
@@ -58,15 +53,15 @@ export default function YandexFormEmbed({
     } else {
       const scriptTimer = setTimeout(loadScript, 500);
       return () => {
-        clearTimeout(timer);
         clearTimeout(scriptTimer);
       };
     }
   }, []);
 
+  const safeKey = (cacheKey || 'ftg_feedback').replace(/[^a-zA-Z0-9_-]/g, '_').slice(0, 50);
+
   const buildIframeUrl = () => {
-    const activeKey = cacheKey || sessionKey || 'fresh_session';
-    const baseUrl = `https://forms.yandex.ru/u/${formId}/?iframe=1&form:cache_key=${activeKey}`;
+    const baseUrl = `https://forms.yandex.ru/u/${formId}/?iframe=1&form:cache_key=${safeKey}`;
 
     const params: string[] = [];
 
@@ -100,10 +95,21 @@ export default function YandexFormEmbed({
     return `${baseUrl}&${params.join('&')}`;
   };
 
+  if (!mounted) {
+    return (
+      <div
+        className={`w-full flex justify-center items-center bg-stone-50 rounded-xl animate-pulse ${className}`}
+        style={minHeight ? { minHeight } : { minHeight: '520px' }}
+      >
+        <span className="text-xs text-stone-400 font-medium">Загрузка формы...</span>
+      </div>
+    );
+  }
+
   return (
     <div className={`w-full flex justify-center items-center overflow-hidden ${className}`}>
       <iframe
-        key={cacheKey || (mounted ? sessionKey : 'ssr')}
+        key={safeKey}
         src={buildIframeUrl()}
         frameBorder="0"
         name={`ya-form-${formId}`}

@@ -30,9 +30,8 @@ export interface CategoryInfo {
   title: string;
   badge: string;
   count: number;
-  description: string;
   image: string;
-  previewItems: string;
+  previewItems: string | string[];
 }
 
 export interface CatalogData {

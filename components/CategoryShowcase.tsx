@@ -96,24 +96,33 @@ export default function CategoryShowcase({
               <div>
                 <div className="flex items-center justify-between gap-2 mb-3">
                   <span
-                    className={`inline-block px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-md ${theme.badgeBg} ${theme.badgeText} border ${theme.badgeBorder}`}
+                    className={`inline-block px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-md ${theme.badgeBg} ${theme.badgeText} border ${theme.badgeBorder} truncate max-w-[65%]` }
                   >
                     {cat.badge}
                   </span>
                   <span
-                    className={`text-[11px] font-semibold ${theme.actionText} ${theme.actionHover} flex items-center gap-0.5 transition-colors`}
+                    className={`text-[11px] font-semibold ${theme.actionText} ${theme.actionHover} flex items-center gap-0.5 transition-colors shrink-0`}
                   >
                     В каталог{' '}
                     <ChevronRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
                   </span>
                 </div>
 
-                <h3 className="text-base sm:text-[17px] font-semibold text-stone-900 group-hover:text-black transition-colors mb-1.5 leading-snug">
+                <h3 className="text-sm sm:text-base lg:text-[17px] font-bold text-stone-900 group-hover:text-black transition-colors mb-1.5 leading-snug break-words">
                   {cat.title}
                 </h3>
 
                 <p className="text-xs text-stone-600 leading-relaxed line-clamp-2 min-h-[36px]">
-                  {cat.previewItems}
+                  {(() => {
+                    const items = cat.previewItems;
+                    if (Array.isArray(items)) {
+                      return items.join(', ');
+                    }
+                    if (typeof items === 'string') {
+                      return items;
+                    }
+                    return String(items);
+                  })()}
                 </p>
               </div>
 
@@ -127,6 +136,8 @@ export default function CategoryShowcase({
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 33vw, 360px"
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
                   referrerPolicy="no-referrer"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
             </div>

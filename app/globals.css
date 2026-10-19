@@ -76,3 +76,50 @@ h1, h2, h3, h4, h5, h6,
 .animate-subtleFade {
   animation: subtleFade 0.15s ease-out forwards;
 }
+
+@keyframes preloaderBar {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(110%);
+  }
+  100% {
+    transform: translateX(320%);
+  }
+}
+
+.animate-preloader-bar {
+  animation: preloaderBar 1.3s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+@keyframes dotWavePulse {
+  0%, 60%, 100% {
+    opacity: 0.25;
+    transform: scale(0.75);
+  }
+  25% {
+    opacity: 1;
+    transform: scale(1.35);
+  }
+}
+
+.preloader-dot-1 {
+  animation: dotWavePulse 1.2s ease-in-out infinite;
+  animation-delay: 0s;
+  animation-fill-mode: both;
+}
+
+.preloader-dot-2 {
+  animation: dotWavePulse 1.2s ease-in-out infinite;
+  animation-delay: 0.22s;
+  animation-fill-mode: both;
+}
+
+.preloader-dot-3 {
+  animation: dotWavePulse 1.2s ease-in-out infinite;
+  animation-delay: 0.44s;
+  animation-fill-mode: both;
+}
+
+

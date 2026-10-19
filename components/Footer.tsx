@@ -18,6 +18,8 @@ export default function Footer({}: FooterProps) {
                 sizes="104px"
                 className="object-contain p-0.5"
                 referrerPolicy="no-referrer"
+                loading="lazy"
+                decoding="async"
               />
             </div>
             <div>

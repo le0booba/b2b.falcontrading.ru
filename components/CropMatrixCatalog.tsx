@@ -448,6 +448,8 @@ export default function CropMatrixCatalog({
                         sizes="(max-width: 640px) 72px, 96px"
                         className="object-cover"
                         referrerPolicy="no-referrer"
+                        loading="lazy"
+                        decoding="async"
                       />
                     </div>
 
@@ -559,28 +561,32 @@ export default function CropMatrixCatalog({
                       return (
                         <div
                           key={product.id}
-                          className="py-3 flex flex-col md:flex-row md:items-center justify-between gap-3.5 hover:bg-stone-50/70 p-2.5 rounded-xl transition-colors group"
+                          className="flex flex-col md:flex-row md:items-center justify-between gap-3.5 hover:bg-stone-50/70 rounded-xl transition-colors group overflow-hidden border border-stone-200/80 bg-white"
                         >
                           <div
                             onClick={() => onOpenSpec(product)}
-                            className="flex items-center gap-3.5 sm:gap-4 flex-1 min-w-0 cursor-pointer group/matitem"
+                            className="flex items-start md:items-center gap-3.5 sm:gap-4 flex-1 min-w-0 cursor-pointer group/matitem"
                           >
                             <div
-                              className="relative w-18 h-18 sm:w-22 sm:h-22 lg:w-24 lg:h-24 rounded-2xl overflow-hidden bg-[#f0f2f0] border border-stone-200/80 p-0.5 flex items-center justify-center shrink-0 group-hover/matitem:border-stone-300 transition-colors shadow-2xs"
+                              className="relative w-22 h-22 sm:w-26 sm:h-26 lg:w-28 lg:h-28 rounded-none overflow-hidden bg-stone-100 shrink-0 self-start md:self-stretch"
                             >
-                              <div className="relative w-full h-full rounded-xl overflow-hidden">
-                                <Image
-                                  src={product.image || '/crops/apple.jpg'}
-                                  alt={product.name}
-                                  fill
-                                  sizes="(max-width: 640px) 72px, 96px"
-                                  className="object-cover"
-                                  referrerPolicy="no-referrer"
-                                />
-                              </div>
+                              <Image
+                                src={product.image || '/crops/apple.jpg'}
+                                alt={product.name}
+                                fill
+                                sizes="(max-width: 640px) 88px, 112px"
+                                className="object-cover rounded-none"
+                                referrerPolicy="no-referrer"
+                                loading="lazy"
+                                decoding="async"
+                              />
                             </div>
 
-                            <div className="space-y-1 flex-1 min-w-0">
+                            <div className="py-2.5 sm:py-3 pr-3 md:pr-0 space-y-1.5 flex-1 min-w-0">
+                              <div className="text-left font-medium text-stone-900 group-hover/matitem:text-[#223329] group-hover/matitem:underline text-sm sm:text-[15px] block transition-colors tracking-wide">
+                                {product.name}
+                              </div>
+
                               <div className="flex flex-wrap items-center gap-1.5 text-[10px] uppercase font-bold">
                                 <span className="px-2 py-0.5 rounded bg-stone-100 text-stone-700">
                                   {product.categoryTitle}
@@ -590,7 +596,7 @@ export default function CropMatrixCatalog({
                                 </span>
                                 <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-[#f0f4f8] text-[#1e2e3e]">
                                   <Globe className="w-2.5 h-2.5 text-stone-400 shrink-0" />
-                                  <span className="inline-flex items-center gap-1.5 flex-wrap">
+                                  <span className={product.origin.length > 2 ? "grid grid-cols-2 gap-1" : "inline-flex items-center gap-1 flex-wrap"}>
                                     {product.origin.map((c) => (
                                       <span key={c} className="inline-flex items-center gap-1">
                                         <CountryFlag country={c} size="sm" shape="rect" />
@@ -606,14 +612,10 @@ export default function CropMatrixCatalog({
                                   </span>
                                 )}
                               </div>
-
-                              <div className="text-left font-bold text-stone-900 group-hover/matitem:text-[#223329] group-hover/matitem:underline text-xs sm:text-sm block transition-colors tracking-tight">
-                                {product.name}
-                              </div>
                             </div>
                           </div>
 
-                          <div className="flex items-center gap-2 self-start md:self-auto shrink-0">
+                          <div className="flex items-center gap-2 self-start md:self-auto shrink-0 p-3 pt-0 md:p-0 md:pr-4">
                             <button
                               onClick={() => onOpenSpec(product)}
                               className="px-3 py-1.5 rounded-xl border border-stone-200 text-stone-700 hover:bg-stone-100 text-xs font-bold flex items-center gap-1 transition-colors cursor-pointer"

@@ -302,7 +302,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   };
 
   return (
-    <html lang="ru" className={golos.variable}>
+    <html lang="ru" className={golos.variable} suppressHydrationWarning>
       <body
         className={`${golos.className} bg-[#fcfdfa] text-stone-900 antialiased font-sans selection:bg-[#223329] selection:text-white`}
         suppressHydrationWarning
