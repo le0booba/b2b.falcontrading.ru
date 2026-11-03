@@ -10,7 +10,7 @@ const golos = Golos_Text({
   variable: '--font-golos',
 });
 
-const SITE_URL = 'https://falcontrading.ru';
+const SITE_URL = 'https://b2b.falcontrading.ru';
 
 export const viewport: Viewport = {
   themeColor: '#223329',
@@ -150,8 +150,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       },
       geo: {
         '@type': 'GeoCoordinates',
-        latitude: 55.571408,
-        longitude: 38.204648,
+        latitude: 55.571901,
+        longitude: 38.263685,
       },
     },
     openingHoursSpecification: [

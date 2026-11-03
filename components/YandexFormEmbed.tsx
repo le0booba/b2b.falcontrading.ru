@@ -58,39 +58,48 @@ export default function YandexFormEmbed({
     }
   }, []);
 
-  const safeKey = (cacheKey || 'ftg_feedback').replace(/[^a-zA-Z0-9_-]/g, '_').slice(0, 50);
+  const [instanceId] = useState(() => Date.now().toString(36) + Math.random().toString(36).slice(2, 6));
+
+  const baseKey = (cacheKey || 'ftg_feedback').replace(/[^a-zA-Z0-9_-]/g, '_').slice(0, 30);
+  const safeKey = `${baseKey}_${instanceId}`;
 
   const buildIframeUrl = () => {
+    // Unique session cache key prevents Yandex Forms from restoring stale drafts with checked checkboxes or old text
     const baseUrl = `https://forms.yandex.ru/u/${formId}/?iframe=1&form:cache_key=${safeKey}`;
 
     const params: string[] = [];
 
-    const effectiveItem = (itemValue !== undefined ? itemValue : prefillValue || '').trim();
-    if (effectiveItem.length > 0) {
-      params.push(`item=${encodeURIComponent(effectiveItem)}`);
-      params.push(`vopros=${encodeURIComponent(effectiveItem)}`);
-      params.push(`question=${encodeURIComponent(effectiveItem)}`);
-    } else {
-      params.push('item=');
-    }
-
-    if (msgValue && typeof msgValue === 'string' && msgValue.trim().length > 0) {
-      params.push(`msg=${encodeURIComponent(msgValue.trim())}`);
-    } else {
-      params.push('msg=');
-    }
-
+    // tel
     if (telValue && typeof telValue === 'string' && telValue.trim().length > 0) {
       params.push(`tel=${encodeURIComponent(telValue.trim())}`);
     } else {
       params.push('tel=');
     }
 
+    // mail
     if (mailValue && typeof mailValue === 'string' && mailValue.trim().length > 0) {
       params.push(`mail=${encodeURIComponent(mailValue.trim())}`);
     } else {
       params.push('mail=');
     }
+
+    // item (Интересующие наименования) - if no specific product is selected, explicitly empty so old inputs are never saved/restored
+    const effectiveItem = (itemValue !== undefined ? itemValue : prefillValue || '').trim();
+    if (effectiveItem.length > 0) {
+      params.push(`item=${encodeURIComponent(effectiveItem)}`);
+    } else {
+      params.push('item=');
+    }
+
+    // msg
+    if (msgValue && typeof msgValue === 'string' && msgValue.trim().length > 0) {
+      params.push(`msg=${encodeURIComponent(msgValue.trim())}`);
+    } else {
+      params.push('msg=');
+    }
+
+    // chkbox (Чек-бокс согласия/подтверждения) - always reset to empty so it is never checked by default
+    params.push('chkbox=');
 
     return `${baseUrl}&${params.join('&')}`;
   };

@@ -4,7 +4,7 @@ import { CATEGORIES, PRODUCTS } from '@/data/products';
 export const dynamic = 'force-static';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://falcontrading.ru';
+  const baseUrl = 'https://b2b.falcontrading.ru';
   const now = new Date();
 
   const categoryEntries: MetadataRoute.Sitemap = CATEGORIES.map((cat) => ({
@@ -35,7 +35,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/#contacts`,
+      url: `${baseUrl}/#contacts-section`,
       lastModified: now,
       changeFrequency: 'monthly' as const,
       priority: 0.8,

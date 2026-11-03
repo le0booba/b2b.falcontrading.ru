@@ -149,6 +149,7 @@ export default function ContactsSection({}: ContactsSectionProps = {}) {
                 formId="6ac07cfceb6146ba89b065c6"
                 cacheKey="ftg_contacts"
                 minHeight="580px"
+                itemValue=""
               />
             </div>
           </div>
@@ -196,7 +197,7 @@ export default function ContactsSection({}: ContactsSectionProps = {}) {
               <a
                 href={
                   activeMapTab === 'ramenskoye'
-                    ? 'https://yandex.ru/maps/?text=Раменское+Транспортный+проезд+5А'
+                    ? 'https://yandex.ru/maps/?text=55.571901,38.263685'
                     : 'https://yandex.ru/maps/?text=Москва+улица+Искры+17Ас3'
                 }
                 target="_blank"
@@ -211,7 +212,7 @@ export default function ContactsSection({}: ContactsSectionProps = {}) {
               <QRCode
                 value={
                   activeMapTab === 'ramenskoye'
-                    ? 'https://yandex.ru/maps/?text=Раменское+Транспортный+проезд+5А'
+                    ? 'https://yandex.ru/maps/?text=55.571901,38.263685'
                     : 'https://yandex.ru/maps/?text=Москва+улица+Искры+17Ас3'
                 }
                 size={40}
@@ -229,7 +230,7 @@ export default function ContactsSection({}: ContactsSectionProps = {}) {
             key={activeMapTab}
             src={
               activeMapTab === 'ramenskoye'
-                ? 'https://yandex.ru/map-widget/v1/?ll=38.262347%2C55.571540&z=15&pt=38.262347,55.571540,pm2rdm'
+                ? 'https://yandex.ru/map-widget/v1/?ll=38.263685%2C55.571901&z=16&pt=38.263685,55.571901,pm2rdm'
                 : 'https://yandex.ru/map-widget/v1/?ll=37.658994%2C55.862419&z=16&pt=37.658994,55.862419,pm2rdm'
             }
             width="100%"

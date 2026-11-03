@@ -1,6 +1,6 @@
 {
-  "name": "Remix Remix b2b_falcontrading_ru",
-  "description": "Imported from GitHub",
+  "name": "Фалкон Трейдинг Груп — Пищевое сырье оптом",
+  "description": "Прямой импортер и поставщик пищевого сырья: соковые концентраты, соки прямого отжима NFC, асептические пюре и цукаты в бочках 200–250 л со склада в РФ.",
   "requestFramePermissions": [],
   "majorCapabilities": [
     "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"

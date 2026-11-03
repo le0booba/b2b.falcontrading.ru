@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
@@ -28,34 +28,59 @@ export default function HomePage() {
   const [quoteProduct, setQuoteProduct] = useState<Product | null>(null);
   const [quoteSessionId, setQuoteSessionId] = useState(0);
 
+  const isInitialSyncDone = useRef(false);
+
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const syncFromUrl = () => {
       const url = new URL(window.location.href);
+
+      // Handle category filter (?category=...)
       const cat = url.searchParams.get('category');
       if (cat) {
         setActiveTab('catalog');
         setSelectedCategoryFilter(cat);
       }
-      const prodId = url.searchParams.get('product');
-      if (prodId) {
-        const prod = PRODUCTS.find((p) => p.id === prodId);
+
+      // Handle direct product link (?product=p-1 or ?product=$p-1)
+      const rawProdId = url.searchParams.get('product');
+      if (rawProdId) {
+        const cleanProdId = rawProdId.replace(/^\$/, '');
+        const prod = PRODUCTS.find((p) => p.id === cleanProdId);
         if (prod) {
           setActiveSpecProduct(prod);
         }
       }
+
+      // Handle hash fragments (#catalog, #contacts-section, #contacts)
+      const hash = window.location.hash.toLowerCase();
+      if (hash === '#catalog') {
+        setActiveTab('catalog');
+        setSelectedCategoryFilter('all');
+      } else if (hash === '#contacts' || hash === '#contacts-section') {
+        setActiveTab('contacts');
+        setTimeout(() => {
+          const element = document.getElementById('contacts-section');
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }, 120);
+      }
+
+      isInitialSyncDone.current = true;
     };
 
-    const timer = setTimeout(syncFromUrl, 0);
+    syncFromUrl();
     window.addEventListener('popstate', syncFromUrl);
+    window.addEventListener('hashchange', syncFromUrl);
     return () => {
-      clearTimeout(timer);
       window.removeEventListener('popstate', syncFromUrl);
+      window.removeEventListener('hashchange', syncFromUrl);
     };
   }, []);
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === 'undefined' || !isInitialSyncDone.current) return;
     const url = new URL(window.location.href);
     if (activeSpecProduct) {
       url.searchParams.set('product', activeSpecProduct.id);
@@ -189,21 +214,23 @@ export default function HomePage() {
         )}
 
         {activeTab === 'catalog' && (
-          <CatalogSection
-            selectedCategoryFilter={selectedCategoryFilter}
-            initialViewMode={catalogInitialViewMode}
-            initialCountryFilter={catalogInitialCountryFilter}
-            onBackToHome={() => {
-              setActiveTab('home');
-              if (typeof window !== 'undefined') {
-                window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-                document.documentElement.scrollTop = 0;
-                document.body.scrollTop = 0;
-              }
-            }}
-            onOpenSpec={handleOpenSpec}
-            onOpenQuote={(prod) => handleOpenQuote(prod)}
-          />
+          <div id="catalog">
+            <CatalogSection
+              selectedCategoryFilter={selectedCategoryFilter}
+              initialViewMode={catalogInitialViewMode}
+              initialCountryFilter={catalogInitialCountryFilter}
+              onBackToHome={() => {
+                setActiveTab('home');
+                if (typeof window !== 'undefined') {
+                  window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+                  document.documentElement.scrollTop = 0;
+                  document.body.scrollTop = 0;
+                }
+              }}
+              onOpenSpec={handleOpenSpec}
+              onOpenQuote={(prod) => handleOpenQuote(prod)}
+            />
+          </div>
         )}
       </main>
 
