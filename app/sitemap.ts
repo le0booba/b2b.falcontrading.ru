@@ -41,13 +41,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/consent`,
+      url: `${baseUrl}/consent/`,
       lastModified: now,
       changeFrequency: 'monthly' as const,
       priority: 0.3,
     },
     {
-      url: `${baseUrl}/privacy`,
+      url: `${baseUrl}/privacy/`,
       lastModified: now,
       changeFrequency: 'monthly' as const,
       priority: 0.3,

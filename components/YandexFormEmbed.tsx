@@ -64,26 +64,22 @@ export default function YandexFormEmbed({
   const safeKey = `${baseKey}_${instanceId}`;
 
   const buildIframeUrl = () => {
-    // Unique session cache key prevents Yandex Forms from restoring stale drafts with checked checkboxes or old text
     const baseUrl = `https://forms.yandex.ru/u/${formId}/?iframe=1&form:cache_key=${safeKey}`;
 
     const params: string[] = [];
 
-    // tel
     if (telValue && typeof telValue === 'string' && telValue.trim().length > 0) {
       params.push(`tel=${encodeURIComponent(telValue.trim())}`);
     } else {
       params.push('tel=');
     }
 
-    // mail
     if (mailValue && typeof mailValue === 'string' && mailValue.trim().length > 0) {
       params.push(`mail=${encodeURIComponent(mailValue.trim())}`);
     } else {
       params.push('mail=');
     }
 
-    // item (Интересующие наименования) - if no specific product is selected, explicitly empty so old inputs are never saved/restored
     const effectiveItem = (itemValue !== undefined ? itemValue : prefillValue || '').trim();
     if (effectiveItem.length > 0) {
       params.push(`item=${encodeURIComponent(effectiveItem)}`);
@@ -91,14 +87,12 @@ export default function YandexFormEmbed({
       params.push('item=');
     }
 
-    // msg
     if (msgValue && typeof msgValue === 'string' && msgValue.trim().length > 0) {
       params.push(`msg=${encodeURIComponent(msgValue.trim())}`);
     } else {
       params.push('msg=');
     }
 
-    // chkbox (Чек-бокс согласия/подтверждения) - always reset to empty so it is never checked by default
     params.push('chkbox=');
 
     return `${baseUrl}&${params.join('&')}`;

@@ -43,13 +43,13 @@ export default function Footer({}: FooterProps) {
 
           <div className="flex flex-wrap items-center gap-4 text-[11px]">
             <a
-              href="/consent"
+              href="/consent/"
               className="hover:text-stone-300 underline transition-colors cursor-pointer"
             >
               Согласие на обработку данных (152-ФЗ)
             </a>
             <a
-              href="/privacy"
+              href="/privacy/"
               className="hover:text-stone-300 underline transition-colors cursor-pointer"
             >
               Политика конфиденциальности

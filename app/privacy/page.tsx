@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description:
     'Политика конфиденциальности ООО «ФАЛКОН ТРЕЙДИНГ ГРУП». Порядок сбора, хранения и защиты персональных данных пользователей в соответствии с законодательством РФ.',
   alternates: {
-    canonical: '/privacy',
+    canonical: '/privacy/',
   },
 };
 

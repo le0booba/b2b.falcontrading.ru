@@ -35,14 +35,12 @@ export default function HomePage() {
     const syncFromUrl = () => {
       const url = new URL(window.location.href);
 
-      // Handle category filter (?category=...)
       const cat = url.searchParams.get('category');
       if (cat) {
         setActiveTab('catalog');
         setSelectedCategoryFilter(cat);
       }
 
-      // Handle direct product link (?product=p-1 or ?product=$p-1)
       const rawProdId = url.searchParams.get('product');
       if (rawProdId) {
         const cleanProdId = rawProdId.replace(/^\$/, '');
@@ -52,7 +50,6 @@ export default function HomePage() {
         }
       }
 
-      // Handle hash fragments (#catalog, #contacts-section, #contacts)
       const hash = window.location.hash.toLowerCase();
       if (hash === '#catalog') {
         setActiveTab('catalog');

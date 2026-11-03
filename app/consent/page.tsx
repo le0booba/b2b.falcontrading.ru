@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description:
     'Порядок и условия согласия на обработку персональных данных пользователей сайта ООО «ФАЛКОН ТРЕЙДИНГ ГРУП» в соответствии с 152-ФЗ.',
   alternates: {
-    canonical: '/consent',
+    canonical: '/consent/',
   },
 };
 
